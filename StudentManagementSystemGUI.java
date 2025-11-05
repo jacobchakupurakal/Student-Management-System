@@ -21,28 +21,28 @@ public class StudentManagementSystemGUI {
     private JLabel statusLabel;
 
     public StudentManagementSystemGUI() {
-        // Optional nicer LAF
+       
         try { UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel"); } catch (Exception ignored) {}
 
         frame = new JFrame("Student Management System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setMinimumSize(new Dimension(950, 600));
 
-        // Background panel that paints an image
-        BackgroundPanel bg = new BackgroundPanel("/bg.jpg"); // put bg.jpg on classpath, or beside class (fallback handled)
+        
+        BackgroundPanel bg = new BackgroundPanel("/bg.jpg"); 
         bg.setLayout(new BorderLayout());
         frame.setContentPane(bg);
 
-        // Glass (semi-transparent) container for content
+        
         JPanel content = new JPanel(new BorderLayout(16, 16));
         content.setOpaque(false);
         content.setBorder(new EmptyBorder(16, 16, 16, 16));
         bg.add(content, BorderLayout.CENTER);
 
-        // ===== Top: Title Bar =====
+        
         content.add(buildTitleBar(), BorderLayout.NORTH);
 
-        // ===== Center: Split (Form | Table) =====
+        
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 buildFormPanel(), buildTablePanel());
         split.setResizeWeight(0.38);
@@ -119,7 +119,7 @@ public class StudentManagementSystemGUI {
         panel.add(l, gc);
 
         gc.gridx = 1; gc.gridy = row; gc.weightx = 1; gc.gridwidth = 1;
-        panel.add(field, gc); // directly add the field (no wrapper, no placeholder)
+        panel.add(field, gc);
     }
 
     private JComponent buildTablePanel() {
@@ -128,7 +128,7 @@ public class StudentManagementSystemGUI {
         container.setBorder(new EmptyBorder(8, 8, 8, 8));
         container.setOpaque(false);
 
-        // --- Table (plain look) ---
+        
         studentTable = new JTable();
         studentTable.setAutoCreateRowSorter(true);
         studentTable.setFillsViewportHeight(true);
@@ -156,7 +156,7 @@ public class StudentManagementSystemGUI {
             }
         });
 
-        // --- Title (bold; small optional icon) ---
+        
         JLabel tableTitle = new JLabel("  Students", loadIcon("/icons/students.png", 24), SwingConstants.LEFT);
         Font base = tableTitle.getFont();
         tableTitle.setFont(base.deriveFont(Font.BOLD, base.getSize2D() + 2f));
@@ -164,10 +164,10 @@ public class StudentManagementSystemGUI {
         tableTitle.setIconTextGap(8);
         tableTitle.setBorder(new EmptyBorder(6, 8, 6, 8));
 
-        // --- Scroll ---
+       
         JScrollPane scroll = new JScrollPane(studentTable);
 
-        // --- Layout ---
+        
         container.add(tableTitle, BorderLayout.NORTH);
         container.add(scroll, BorderLayout.CENTER);
 
@@ -320,9 +320,9 @@ public class StudentManagementSystemGUI {
         SwingUtilities.invokeLater(StudentManagementSystemGUI::new);
     }
 
-    /* ---------- Helpers ---------- */
+    
 
-    /** Convert a ResultSet to a TableModel (no external libs). */
+    
     private static javax.swing.table.TableModel resultSetToTableModel(ResultSet rs) throws SQLException {
         ResultSetMetaData meta = rs.getMetaData();
         int columns = meta.getColumnCount();
@@ -341,7 +341,7 @@ public class StudentManagementSystemGUI {
         };
     }
 
-    /** Paints a scaled background image that covers the window (classpath first, then file path fallback). */
+    
     static class BackgroundPanel extends JPanel {
         private BufferedImage image;
         BackgroundPanel(String resourcePath) {
@@ -371,7 +371,7 @@ public class StudentManagementSystemGUI {
                 int x = (w - drawW) / 2;
                 int y = (h - drawH) / 2;
                 g2.drawImage(image, x, y, drawW, drawH, null);
-                g2.setColor(new Color(0, 0, 0, 90)); // darken for contrast
+                g2.setColor(new Color(0, 0, 0, 90)); 
                 g2.fillRect(0, 0, w, h);
             } else {
                 GradientPaint gp = new GradientPaint(0, 0, new Color(30, 40, 60), w, h, new Color(10, 10, 20));
@@ -382,7 +382,7 @@ public class StudentManagementSystemGUI {
         }
     }
 
-    /** Rounded translucent card panel. */
+    
     static class RoundedPanel extends JPanel {
         RoundedPanel() { setOpaque(false); }
         @Override protected void paintComponent(Graphics g) {
@@ -398,7 +398,7 @@ public class StudentManagementSystemGUI {
         }
     }
 
-    /** Load an optional small PNG icon from classpath; returns null if missing. */
+    
     private static Icon loadIcon(String classpath, int size) {
         try {
             var url = StudentManagementSystemGUI.class.getResource(classpath);
@@ -412,3 +412,4 @@ public class StudentManagementSystemGUI {
         }
     }
 }
+
